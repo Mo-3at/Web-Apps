@@ -1,0 +1,124 @@
+*{
+margin: 0;
+padding: 0;    
+}
+@font-face {
+    font-family: 'ArefRuqaa-Bold';
+    src: url('alfont_com_ArefRuqaaswashesfixed-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+body{
+    background: #222;
+    color: #fff;
+    font-family: 'ArefRuqaa-Bold';
+}
+.container{
+    width: 80%;
+    margin: auto;
+}
+.head{
+    text-align: center;
+    margin: 10px 0px;
+    margin-top: 30px;
+    margin-bottom: 60px;
+
+}
+ input {
+    background-color: #111; 
+    width: 100%;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #fff;
+    font-family: 'ArefRuqaa-Bold', serif;
+    font-size: 1.1rem;
+    
+    padding: 10px 15px; 
+    line-height: 1.5;
+    box-sizing: border-box;
+    
+    text-align: right; 
+}
+
+input::placeholder {
+    color: #aaa;
+    font-family: 'ArefRuqaa-Bold', serif;
+}
+ input:focus{
+    background: #000;
+    transform: scale(1.1);
+}
+.price{
+    margin: 10px 0px;
+    display: flex;
+}
+#profit{
+    background-color: #8b0000; 
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%; 
+}
+#profit::before{
+    content: 'total: ';
+}
+button{
+    font-family: 'ArefRuqaa-Bold', serif;
+    padding: 6px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s;
+}
+button:hover{
+    background: #02067c;
+    letter-spacing: 1px;
+}
+.searchblock{
+    margin-top: 10px;
+}
+#search{
+    margin-top: 10px;
+}
+table{
+    width: 100%;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: transparent; 
+}
+th, td {
+    text-align: right; 
+    padding: 12px 15px;
+    vertical-align: middle;
+    line-height: 1.6; 
+}
+th {
+    color: #ffffff;
+    font-size: 1.1rem;
+    border-bottom: 2px solid #333;
+}
+td {
+    color: #e0e0e0;
+    border-bottom: 1px solid #222;
+}
+th:first-child, td:first-child {
+    text-align: right; 
+    width: 50px;       
+}
+.btn-update, .btn-delete {
+    background-color: #050b4f; 
+    color: #ffffff;
+}
+.btn-update:hover, .btn-delete:hover {
+    background-color: #0b1575; 
+}
