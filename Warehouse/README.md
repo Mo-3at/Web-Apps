@@ -9,13 +9,14 @@ This software was made by HTML,CSS,JS
 
 The javascript code for this software provides various features 
 
-1- Live search for items
-2- Adding and editing existing items 
-3- Deleting items from the list 
+* Live search for items
+* Adding and editing existing items 
+* Deleting items from the list 
 
 ## Styling
 
-CSS was used to give a sleek look with a custom arabic font (font file in the repo any custom font can be used just install the desired font and change the font face in the CSS code)
+CSS was used to give a sleek look with a custom arabic font (the used font file is in the repo, Any custom fonts can be used just install the desired font file and change the font face in the CSS code).
+
 
 
 
