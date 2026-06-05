@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة رئيسية</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+  
+  <div class="head">
+    <h2> شركة الجوهري </h2>
+    <p>وَفِي السَّمَاءِ رِزْقُكُمْ وَمَا تُوعَدُونَ </p>
+  </div>
+
+
+  <div class="input">
+    <input placeholder="البند" type="text" id="item"> 
+    <input placeholder="صنف"  type="text" id="category">
+    <div class="price">
+      <input placeholder="سعر الشراء" onkeyup="totalprofit()" type="number" id="buy_price">  
+      <input placeholder="سعر البيع" onkeyup="totalprofit()" type="number" id="sell_price">
+      <input placeholder="عدد" onkeyup="totalprofit()" type="number" id="quantity">  
+      <small id="profit">0</small>
+    </div>
+    <button id="submit">اتمام</button>
+  </div>
+
+
+  <div class="output">
+    <div class="searchblock">
+        <input type="text" id="search" placeholder="البند">
+        <button id="searchbtn" onclick="search()">بحث</button>
+    </div>
+    <table>
+    <tr>
+        <th>id</th>
+        <th>البند</th>
+        <th>الصنف</th>
+        <th>سعر الشراء</th>
+        <th>سعر البيع</th>
+        <th>عدد</th>
+        <th>تعديل</th>
+        <th>حذف</th>
+    </tr>
+    
+    
+    <tbody id="tbody">
+
+    </tbody> 
+    
+    </table>
+  </div>
+
+
+  </div>  
+  <script src="main.js"></script>    
+</body>
+</html>
