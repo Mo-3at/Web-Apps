@@ -20,7 +20,7 @@ The javascript code for this software provides various features
 CSS was used to give a sleek look with a custom arabic font (the used font file is in the repo, Any custom fonts can be used just install the desired font file and change the font face in the CSS code).
 
 
-##NOTE 
+## NOTE 
 The API key is stored in the js code this is safe for only running the software locally it is recomended to store the API key in the env variables of the system instead 
 
 
