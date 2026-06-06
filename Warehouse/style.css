@@ -1,7 +1,11 @@
-*{
-margin: 0;
-padding: 0;    
+/* ================= GLOBAL RESET ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
+/* ================= FONT ================= */
 @font-face {
     font-family: 'ArefRuqaa-Bold';
     src: url('alfont_com_ArefRuqaaswashesfixed-Bold.ttf') format('truetype');
@@ -9,116 +13,225 @@ padding: 0;
     font-style: normal;
     font-display: swap;
 }
-body{
+
+/* ================= BASE ================= */
+body {
     background: #222;
     color: #fff;
     font-family: 'ArefRuqaa-Bold';
 }
-.container{
+
+.container {
     width: 80%;
     margin: auto;
 }
-.head{
+
+/* ================= HEADER ================= */
+.head {
     text-align: center;
-    margin: 10px 0px;
     margin-top: 30px;
     margin-bottom: 60px;
-
 }
- input {
-    background-color: #111; 
-    width: 100%;
+
+/* ================= INPUTS ================= */
+input {
+    background-color: #111;
     border: 1px solid #333;
     border-radius: 6px;
     color: #fff;
-    font-family: 'ArefRuqaa-Bold', serif;
     font-size: 1.1rem;
-    
-    padding: 10px 15px; 
+    padding: 10px 15px;
     line-height: 1.5;
-    box-sizing: border-box;
-    
-    text-align: right; 
+    text-align: right;
+    width: 100%;
 }
 
-input::placeholder {
-    color: #aaa;
-    font-family: 'ArefRuqaa-Bold', serif;
-}
- input:focus{
+/* REMOVE GLOBAL SCALE BUG */
+input:focus {
     background: #000;
-    transform: scale(1.1);
+    outline: none;
 }
-.price{
-    margin: 10px 0px;
+
+/* ================= PRICE ROW ================= */
+.price {
+    margin: 10px 0;
     display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
-#profit{
-    background-color: #8b0000; 
+
+.price input {
+    flex: 1;
+    min-width: 120px;
+}
+
+/* ================= PROFIT BOX ================= */
+#profit {
+    background-color: #8b0000;
     color: white;
     padding: 10px 20px;
     border-radius: 6px;
     font-weight: bold;
-    text-align: center;
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    height: 100%; 
 }
-#profit::before{
+
+#profit::before {
     content: 'total: ';
 }
-button{
+
+/* ================= BUTTONS ================= */
+button {
     font-family: 'ArefRuqaa-Bold', serif;
-    padding: 6px 20px;
+    padding: 10px;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     width: 100%;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s ease;
 }
-button:hover{
+
+button:hover {
     background: #02067c;
-    letter-spacing: 1px;
 }
-.searchblock{
+
+/* ================= SEARCH ================= */
+.searchblock {
     margin-top: 10px;
 }
-#search{
-    margin-top: 10px;
-}
-table{
-    width: 100%;
-}
+
+/* ================= TABLE ================= */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    background-color: transparent; 
+    background-color: transparent;
 }
+
 th, td {
-    text-align: right; 
+    text-align: right;
     padding: 12px 15px;
     vertical-align: middle;
-    line-height: 1.6; 
 }
+
 th {
-    color: #ffffff;
-    font-size: 1.1rem;
     border-bottom: 2px solid #333;
+    font-size: 1.1rem;
 }
+
 td {
-    color: #e0e0e0;
     border-bottom: 1px solid #222;
+    color: #e0e0e0;
 }
-th:first-child, td:first-child {
-    text-align: right; 
-    width: 50px;       
-}
+
+/* ================= ACTION BUTTONS ================= */
 .btn-update, .btn-delete {
-    background-color: #050b4f; 
-    color: #ffffff;
+    background-color: #050b4f;
+    color: white;
 }
+
 .btn-update:hover, .btn-delete:hover {
-    background-color: #0b1575; 
+    background-color: #0b1575;
+}
+
+/* ================= CHAT SYSTEM ================= */
+.chat-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 15px;
+}
+
+.chat-box {
+    width: 350px;
+    height: 450px;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chat-header {
+    background-color: #8b0000;
+    padding: 15px;
+    text-align: left;
+}
+
+.chat-header h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+
+.chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bot-msg {
+    background-color: #2d2d2d;
+    padding: 8px 12px;
+    border-radius: 8px;
+    max-width: 80%;
+    align-self: flex-start;
+}
+
+
+.chat-input-area {
+    padding: 10px;
+    background-color: #111;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.chat-input-area input {
+    background: #222;
+    border: 1px solid #444;
+    color: white;
+    padding: 8px;
+    border-radius: 6px;
+}
+
+/* FIX CHAT INPUT SCALE BUG */
+.chat-input-area input:focus {
+    transform: none;
+}
+
+/* SEND BUTTON */
+#send-btn {
+    background-color: #8b0000;
+    color: white;
+}
+
+/* ================= FLOATING BUTTON ================= */
+.floating-btn {
+    width: 60px !important;
+    height: 60px !important;
+    background-color: #8b0000;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ================= HIDDEN ================= */
+.hidden {
+    display: none !important;
 }
