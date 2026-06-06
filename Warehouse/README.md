@@ -15,6 +15,8 @@ The javascript code for this software provides various features
 * Deleting items from the list
 * An AI chatbot which depends on gemini-AI
 
+for running the AI chatbot an API key from google AI studio is required 
+
 ## Styling
 
 CSS was used to give a sleek look with a custom arabic font (the used font file is in the repo, Any custom fonts can be used just install the desired font file and change the font face in the CSS code).
