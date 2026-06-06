@@ -5,166 +5,290 @@ let sell_price = document.getElementById('sell_price');
 let quantity = document.getElementById('quantity');
 let profit = document.getElementById('profit');
 let submit = document.getElementById('submit');
-let search = document.getElementById('search');
-let searchbtn = document.getElementById('searchbtn');
-let mood = "create" ;
-let tmpvar;
-//console.log(item,category,buy_price,sell_price,quantity,profit,submit,search,searchbtn);
+let searchInput = document.getElementById('search');
+let buffer_array = [];
+let mood = "create";
+let tmpvar = null;
+let floatingBtn = document.getElementById("floating-ai-btn");
+let chatBox = document.getElementById("chat-box");
+let apiInput = document.getElementById("API_KEY");
+let startBtn = document.getElementById("start-chat-btn");
+let chatControls = document.getElementById("chat-controls");
+let userInput = document.getElementById("user-input");
+let sendBtn = document.getElementById("send-btn");
 
 
 
-//total price func
-function totalprofit(){
-    if(buy_price.value != '' && sell_price.value != '' && quantity.value != ''){
+
+
+//Load
+function loadData() {
+    try {
+        buffer_array = JSON.parse(localStorage.getItem('product')) || [];
+    } catch (e) {
+        buffer_array = [];
+    }
+}
+loadData();
+
+
+
+//profit
+function totalprofit() {
+    if (buy_price.value && sell_price.value && quantity.value) {
         let result = (+sell_price.value - +buy_price.value) * +quantity.value;
         profit.innerHTML = result;
         profit.style.background = '#040';
-    }else{
-        profit.innerHTML = '';
-        profit.style.background = '#830000'
-    }
-}
-
-
-
-//create product
-//save local storage
-let buffer_array;
-if(localStorage.product != null){
-    buffer_array = JSON.parse(localStorage.product)
-}else{
-    buffer_array = [];
-}
-submit.onclick = function () {
-    const newitem = {
-        item: item.value,
-        category: category.value,
-        buy_price: buy_price.value,
-        sell_price: sell_price.value,
-        quantity: quantity.value,
-        profit: profit.innerHTML,
-    };
-
-    if (mood === "create") {
-        let found = false;
-
-        for (let i = 0; i < buffer_array.length; i++) {
-            if (buffer_array[i].item === newitem.item) {
-                buffer_array[i].quantity =
-                    +buffer_array[i].quantity + +newitem.quantity;
-                found = true;
-                break;
-            }
-        }
-
-        if (!found) {
-            buffer_array.push(newitem);
-        }
-
     } else {
-        buffer_array[tmpvar] = newitem;
-        submit.innerHTML = "إنشاء";
-        mood = "create";
+        profit.innerHTML = '0';
+        profit.style.background = '#830000';
     }
+}
 
+
+
+//Save
+function saveData() {
     localStorage.setItem('product', JSON.stringify(buffer_array));
-    clearinputs();
-    showdata();
-    profit.style.background = '#830000';
-};
-showdata();
+}
 
 
 
-//clear inputs
-function clearinputs(){
+//Clear inputs
+function clearinputs() {
     item.value = '';
     category.value = '';
     buy_price.value = '';
     sell_price.value = '';
     quantity.value = '';
-    profit.innerHTML = '';
+    profit.innerHTML = '0';
 }
 
 
 
-//read
-function showdata(){
-    let table = '';
-    for(let i = 0; i < buffer_array.length; i++){
-        table += `<tr>
-                        <td>${i+1}</td>
-                        <td>${buffer_array[i].item}</td>
-                        <td>${buffer_array[i].category}</td>
-                        <td>${buffer_array[i].buy_price}</td>
-                        <td>${buffer_array[i].sell_price}</td>
-                        <td>${buffer_array[i].quantity}</td>
-                        <td><button onclick="edititem(${i})">تعديل</button></td>
-                        <td><button onclick="deleteitem(${i})">حذف</button></td>
-                        
-                    </tr>`;
+//Create/update
+submit.onclick = function () {
+
+    if (!item.value.trim()) return alert("Enter item name");
+
+    const newitem = {
+        item: item.value.trim(),
+        category: category.value.trim(),
+        buy_price: +buy_price.value,
+        sell_price: +sell_price.value,
+        quantity: +quantity.value
+    };
+
+    if (mood === "create") {
+
+        let found = buffer_array.find(i => i.item === newitem.item);
+
+        if (found) {
+            found.quantity += newitem.quantity;
+        } else {
+            buffer_array.push(newitem);
+        }
+
+    } else {
+        buffer_array[tmpvar] = newitem;
+        submit.innerHTML = "اتمام";
+        mood = "create";
+        tmpvar = null;
     }
+
+    saveData();
+    clearinputs();
+    showdata();
+    profit.style.background = '#830000';
+};
+
+
+
+//Show data
+function showdata(data = buffer_array) {
+
+    let table = '';
+
+    data.forEach((item, i) => {
+        table += `
+            <tr>
+                <td>${i + 1}</td>
+                <td>${item.item}</td>
+                <td>${item.category}</td>
+                <td>${item.buy_price}</td>
+                <td>${item.sell_price}</td>
+                <td>${item.quantity}</td>
+                <td><button onclick="edititem(${i})">تعديل</button></td>
+                <td><button onclick="deleteitem(${i})">حذف</button></td>
+            </tr>
+        `;
+    });
+
     document.getElementById('tbody').innerHTML = table;
-    
 }
 
+showdata();
 
 
-//delete
-function deleteitem(i){
-    buffer_array.splice(i,1);
-    localStorage.product = JSON.stringify(buffer_array);
+
+
+//Delete
+function deleteitem(i) {
+    buffer_array.splice(i, 1);
+    saveData();
     showdata();
 }
 
 
 
-//update
-function edititem(i){
-    item.value = buffer_array[i].item;
-    category.value = buffer_array[i].category;
-    buy_price.value = buffer_array[i].buy_price;
-    sell_price.value = buffer_array[i].sell_price;
-    quantity.value = buffer_array[i].quantity;
+//Edit
+function edititem(i) {
+    let data = buffer_array[i];
+
+    item.value = data.item;
+    category.value = data.category;
+    buy_price.value = data.buy_price;
+    sell_price.value = data.sell_price;
+    quantity.value = data.quantity;
+
     totalprofit();
+
     submit.innerHTML = "تحديث";
     mood = "update";
     tmpvar = i;
 }
 
-    
 
 
 
+//Search
+function search() {
+    let value = searchInput.value.toLowerCase();
 
-
-//search
-search.onkeyup = function searchdata(){
-    let value = search.value.toLowerCase();
-    let table = '';
-
-    for(let i = 0; i < buffer_array.length; i++){
-        let itemName = buffer_array[i].item.toLowerCase();
-
-        if(itemName.includes(value)){
-            table += `<tr>
-                        <td>${i+1}</td>
-                        <td>${buffer_array[i].item}</td>
-                        <td>${buffer_array[i].category}</td>
-                        <td>${buffer_array[i].buy_price}</td>
-                        <td>${buffer_array[i].sell_price}</td>
-                        <td>${buffer_array[i].quantity}</td>
-                        <td><button onclick="edititem(${i})">تعديل</button></td>
-                        <td><button onclick="deleteitem(${i})">حذف</button></td>
-                      </tr>`;
-        }
-    }
-   
-    if (value === "") {
+    if (!value) {
         showdata();
-    } else {
-        document.getElementById('tbody').innerHTML = table;
+        return;
     }
 
+    let filtered = buffer_array.filter(item =>
+        item.item.toLowerCase().includes(value)
+    );
+
+    showdata(filtered);
+}
+searchInput.addEventListener("keyup", search);
+
+
+
+
+
+
+
+//AI AREA-----------------------------------------------------------------------------------
+
+
+floatingBtn?.addEventListener("click", () => {
+    chatBox.classList.toggle("hidden");
+});
+
+let apiKey = null;
+
+
+
+// Initialize chat state
+function initChatState() {
+    chatControls.style.display = "none";
+    startBtn.style.display = "block";
 }
 
+initChatState();
+
+
+// Handle API key submission
+startBtn.onclick = function () {
+    const key = apiInput.value;
+
+    if (!key) {
+        alert("Please enter API key");
+        return;
+    }
+
+    apiKey = key;
+
+    // switch UI
+    apiInput.style.display = "none";
+    startBtn.style.display = "none";
+    chatControls.style.display = "flex";
+
+    addBotMessage("API key accepted. You can now chat.");
+};
+
+
+
+// Handle sending messages
+sendBtn.onclick = async function () {
+    const msg = userInput.value;
+    if (!msg) return;
+
+    addUserMessage(msg);
+    userInput.value = "";
+
+    const response = await callGemini(msg);
+    addBotMessage(response);
+};
+
+
+function addUserMessage(text) {
+    const msg = document.createElement("p");
+    msg.className = "user-msg";
+    msg.textContent = text;
+    document.getElementById("chat-messages").appendChild(msg);
+}
+
+function addBotMessage(text) {
+    const msg = document.createElement("div");
+    msg.className = "bot-msg";
+
+    msg.innerHTML = marked.parse(text); 
+
+    document.getElementById("chat-messages").appendChild(msg);
+}
+
+
+
+// Call Gemini API
+async function callGemini(message) {
+    try {
+        const res = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    contents: [
+                        {
+                            parts: [{ text: message }]
+                        }
+                    ]
+                })
+            }
+        );
+
+        const data = await res.json();
+
+        console.log("FULL GEMINI RESPONSE:", data);
+
+        if (!res.ok || data.error) {
+            return data?.error?.message || "API ERROR";
+        }
+
+        return data?.candidates?.[0]?.content?.parts?.[0]?.text
+            || "EMPTY RESPONSE";
+
+    } catch (err) {
+        console.log(err);
+        return "NETWORK ERROR";
+    }
+}
